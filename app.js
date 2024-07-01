@@ -6,11 +6,13 @@ const cookieParser  = require('cookie-parser')
 const session       = require('express-session')
 
 
-
 // import file controller
-const c_beranda     = require('./controller/c_beranda')
-const c_auth        = require('./controller/c_auth')
-const cek_login     = c_auth.cek_login
+const c_beranda         = require('./controller/c_beranda')
+const c_auth            = require('./controller/c_auth')
+const c_dashboard       = require('./controller/c_dashboard')
+const c_user            = require('./controller/c_user')
+const c_master_produk   = require('./controller/c_master_produk')
+const cek_login         = c_auth.cek_login
 
 
 
@@ -31,7 +33,6 @@ app.use( passport.initialize() )
 app.use( passport.session() )
 
 
-
 // settingan general
 app.use( express.urlencoded({extended:false}) )
 app.set('view engine', 'ejs')
@@ -39,17 +40,12 @@ app.set('views', './view-html')
 app.use(express.static('public'))
 
 
-
 // route
 app.get('/', c_beranda.index)
 app.get('/login', c_auth.form_login)
 app.post('/proses-login', c_auth.proses_login)
-
-app.get('/dashboard', cek_login
-
-
-
-// jalankan server
-app.listen(port, ()=>{
-    console.log(`Aplikasi sudah siap, buka http://localhost:${port}`)
-})
+app.get('/dashboard', cek_login, c_dashboard.index)
+app.get('/master-produk', cek_login, c_master_produk.index)
+app.get('/user-management', cek_login, c_user.index)
+app.get('/user/tambah', cek_login, c_user.form_tambah)
+app.post('/user/proses-simpan', cek_login, c_user.proses_simpan)

@@ -33,17 +33,17 @@ module.exports =
 
     form_login: function(req,res) {
         if (req.session.user) {
-            res.redirect
+            res.redirect('/dashboard')
         } else {
-            
+            let dataview = {
+                req: req
+            }
+            res.render('auth/form-login', dataview)
         }
-        
-        
-        let dataview = {
-            req: req
-        }
-        res.render('auth/form-login', dataview)
     },
+
+
+
     proses_login: async function(req,res) {
         let username = req.body.form_username
         let password = req.body.form_password
@@ -55,10 +55,10 @@ module.exports =
                 req.session.user = user
                 return res.redirect('/dashboard')
             } else {
-                res.redirect(`/login?msg= password salah!`)
+                res.redirect(`/login?msg=password salah!`)
             }
         } else {
-            res.redirect(`/login?msg= username tidak terdaftar, silakan hubungi administrator sistem.`)
+            res.redirect(`/login?msg=username tidak terdaftar, silakan hubungi administrator sistem.`)
         }
     },
 
@@ -68,7 +68,7 @@ module.exports =
         if (req.session.user) {
             next()
         } else {
-            res.redirect(`/login?msg= sesi anda sudah habis, silakan login ulang!`)
+            res.redirect(`/login?msg=sesi anda sudah habis, silakan login ulang!`)
         }
     },
 

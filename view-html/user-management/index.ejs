@@ -1,0 +1,10 @@
+<h1>User Management</h1>
+<hr>
+<a href="/user/tambah" class="btn btn-outline-primary rounded-circle mb-3">
+    <i class="fa-solid fa-plus"></i>
+</a>
+<ul class="list-group">
+    <% for (const i in users) { %>
+        <li  class="list-group-item"><%= users[i].username %> (<%= users[i].nama_lengkap %>)</li>
+    <% } %>
+</ul>
